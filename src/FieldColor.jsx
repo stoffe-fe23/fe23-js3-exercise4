@@ -18,17 +18,20 @@ const FieldColor = forwardRef(({ isDisplayed, validation, onValidate, colorOptio
         <>
             {isDisplayed && <div>
                 <label htmlFor="input-color">Favoritfärg</label>
-                <select
-                    ref={ref}
-                    name="color"
-                    id="input-color"
-                    onChange={(evt) => setInputColor(evt.target.value)}
-                    value={inputColor}
-                    onBlur={onUnfocus}
-                    className={(validation == "failed") ? "field-failed" : (validation == "valid") ? "field-valid" : ""}
-                >
-                    {colorOptions.map((opt, idx) => <option key={idx} value={opt.value}>{opt.label}</option>)}
-                </select>
+                <div className="color-picker">
+                    <select
+                        ref={ref}
+                        name="color"
+                        id="input-color"
+                        onChange={(evt) => setInputColor(evt.target.value)}
+                        value={inputColor}
+                        onBlur={onUnfocus}
+                        className={(validation == "failed") ? "field-failed" : (validation == "valid") ? "field-valid" : ""}
+                    >
+                        {colorOptions.map((opt, idx) => <option key={idx} value={opt.value}>{opt.label}</option>)}
+                    </select>
+                    <div className="color-viewer" style={{ backgroundColor: inputColor }}>&nbsp;</div>
+                </div>
             </div>}
         </>
     );
