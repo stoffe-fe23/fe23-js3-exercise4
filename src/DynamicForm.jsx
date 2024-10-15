@@ -6,6 +6,7 @@ import FieldColor from "./FieldColor";
 
 
 export default function DynamicForm() {
+    // Colors available in the Fav. Color menu. 
     const colorOptions = [
         { value: "", label: "-- Välj en färg --" },
         { value: "lightseagreen", label: "Light Sea Green" },
@@ -15,8 +16,10 @@ export default function DynamicForm() {
         { value: "orange", label: "Orange" },
         { value: "yellow", label: "Yellow" },
         { value: "blue", label: "Blue" },
+        { value: "cyan", label: "Cyan" },
         { value: "green", label: "Green" },
-        { value: "red", label: "Red" }
+        { value: "red", label: "Red" },
+        { value: "magenta", label: "Magenta" }
     ];
 
     // Track field validation
@@ -48,18 +51,18 @@ export default function DynamicForm() {
     }, [validFields]);
 
 
-    // Click on The Final Button...
+    // Click on The Final Button™...
     function onButtonClick(event) {
         console.log("SUBMIT!");
         alert("Bra jobbat!");
     }
 
-    // Validation of field input.
+    // Validation of field input
     function validateField(element, value) {
         console.log("VALIDATE=", element, ", value=", value);
         switch (element) {
             case "name":
-                // Check name length
+                // Check name length (3-50)
                 if ((value.length > 3) && (value.length <= 50)) {
                     console.log("Name is valid!");
                     setValidFields((curr) => { return { ...curr, name: "valid" } });
@@ -69,7 +72,7 @@ export default function DynamicForm() {
                 }
                 break;
             case "email":
-                // Pattern similar to HTML5 email input type, since React seems to disable HTML form constraints?  
+                // Check email address, pattern similar to HTML5 email input type... 
                 if (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
                     console.log("Email is valid!");
                     setValidFields((curr) => { return { ...curr, email: "valid" } });
@@ -79,7 +82,7 @@ export default function DynamicForm() {
                 }
                 break;
             case "color":
-                // Check if input is one of the valid options
+                // Check if input is one of the valid color options
                 if (value.length && colorOptions.map((opt) => opt.value).includes(value)) {
                     console.log("Color is valid!");
                     setValidFields((curr) => { return { ...curr, color: "valid" } });
@@ -89,7 +92,7 @@ export default function DynamicForm() {
                 }
                 break;
             case "shoeSize":
-                // Check shoe size number constraints. 
+                // Check shoe size number constraints (24-55). 
                 value = Number(value);
                 if (!isNaN(value) && (value >= 24) && (value <= 55)) {
                     console.log("Shoe Size is valid!");
@@ -102,6 +105,7 @@ export default function DynamicForm() {
         }
     }
 
+    // Check if the fields with the specified names have their validation result set as Valid. 
     function getFieldsAreValid(fields) {
         for (const field of fields) {
             if (!validFields[field] || validFields[field] != "valid") {
